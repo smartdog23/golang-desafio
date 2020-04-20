@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/smartdog23/golang-desafio/application/repositories"
+	"github.com/smartdog23/golang-desafio/application/usecases"
 	"github.com/smartdog23/golang-desafio/domain"
 	"github.com/smartdog23/golang-desafio/framework/utils"
 	"log"
@@ -14,13 +15,15 @@ func main()  {
 
 	user := domain.User{
 		Name:     "Valdir",
-		Email:    "valdirpl@gmail.com",
+		Email:    "valdir1@gmail.com",
 		Password: "secret",
 	}
 
 	userRepo := repositories.UserRepositoryDb{Db:db}
 
-	result, err := userRepo.Insert(&user)
+	userUseCase := usecases.UserUseCase{userRepo}
+
+	result, err := userUseCase.Create(&user)
 
 	if err != nil {
 		log.Fatal(err)
